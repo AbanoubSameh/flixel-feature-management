@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id           String        @id @default(uuid())
+  users        User[]
+  environments Environment[]
+  attributes   Attribute[]
+  featureFlags FeatureFlag[]
+}
+
+model FeatureFlag {
+  id          String           @id @default(uuid())
+  name        String
+  description String?
+  schemas     Schema[]
+  Account     Account?         @relation(fields: [accountId], references: [id])
+  state       FeatureFlagState @default(ACTIVE)
+  accountId   String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Schema {
+  id              String       @id @default(uuid())
+  type            SchemaType
+  value           String
+  environment     Environment  @relation(fields: [environmentName], references: [name])
+  FeatureFlag     FeatureFlag? @relation(fields: [featureFlagId], references: [id])
+  featureFlagId   String?
+  environmentName String
+}
+
+model User {
+  id         String   @id @default(uuid())
+  attributes Json
+  Account    Account? @relation(fields: [accountId], references: [id])
+  accountId  String?
+}
+
+model Attribute {
+  key       String             @id
+  type      AttributeFieldType
+  Account   Account?           @relation(fields: [accountId], references: [id])
+  accountId String?
+
+  @@unique([key, accountId])
+}
+
+model Environment {
+  name      String   @id
+  Account   Account  @relation(fields: [accountId], references: [id])
+  accountId String
+  Schema    Schema[]
+
+  @@unique([name, accountId])
+}
+
+enum AttributeFieldType {
+  STRING
+  NUMBER
+  DATE
+}
+
+enum FeatureFlagState {
+  ACTIVE
+  ARCHIVED
+}
+
+enum SchemaType {
+  DYNAMIC
+  STATIC
+}
