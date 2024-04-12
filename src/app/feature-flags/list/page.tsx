@@ -1,20 +1,16 @@
+import { Button } from "@/components/ui/button";
+import DataTable from "@/components/ui/table";
 import { FeatureFlagService } from "@/lib/prisma/data/feature-flags/feature-flags.data.service";
-
-const featureFlagService = FeatureFlagService.getInstance<FeatureFlagService>();
+import { featureFlagsTableColumns } from "./feature-flags-table/columns";
 
 export default async function FeatureFlagListPage() {
-  //    await featureFlagService.createFeatureFlag({ name: 'hello world' })
-  console.log(await featureFlagService.getFeatureFlags());
+  const data = await FeatureFlagService.getFeatureFlags();
   return (
     <div className="flex flex-col">
       <div className=" flex justify-end mb-3">
-        <button>Create Feature flag</button>
+        <Button>Create</Button>
       </div>
-
-      {/* <table className="flex-grow p-3">
-
-            flag list
-        </table> */}
+      <DataTable columns={featureFlagsTableColumns} data={data} />
     </div>
   );
 }
