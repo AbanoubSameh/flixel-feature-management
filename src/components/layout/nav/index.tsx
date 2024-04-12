@@ -1,15 +1,6 @@
-import styles from "./styles.module.css";
-
-import Link from "next/link";
-import { ReactElement } from "react";
 import { FaUsers } from "react-icons/fa";
 import { GiToggles } from "react-icons/gi";
-
-export interface SidebarItem {
-  text: string;
-  link: string;
-  icon: ReactElement;
-}
+import { SidebarItem, SidebarItemComponent } from "./sidebar-item";
 
 const sidebarItems: SidebarItem[] = [
   {
@@ -17,7 +8,7 @@ const sidebarItems: SidebarItem[] = [
     icon: <GiToggles size="28" />,
     link: "/feature-flags/list",
   },
-  { text: "Contacts", icon: <FaUsers size="28" />, link: "/" },
+  { text: "Contacts", icon: <FaUsers size="28" />, link: "/users/list" },
 ];
 
 export default function NavComponent() {
@@ -31,24 +22,5 @@ export default function NavComponent() {
         ))}
       </ul>
     </nav>
-  );
-}
-
-export function SidebarItemComponent({
-  sidebarItem,
-}: {
-  sidebarItem: SidebarItem;
-}) {
-  return (
-    <Link
-      className={`${styles["sidebar-icon"]} group`}
-      href={sidebarItem?.link}
-    >
-      {sidebarItem.icon}
-      <span className={`${styles["sidebar-tooltip"]} group-hover:scale-100`}>
-        {" "}
-        {sidebarItem.text}{" "}
-      </span>
-    </Link>
   );
 }

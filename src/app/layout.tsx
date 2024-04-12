@@ -23,7 +23,7 @@ export default function RootLayout({
         <HeaderComponent />
         <div className="h-full flex flex-row">
           <NavComponent />
-          <div className=" p-5 flex-grow">{children}</div>
+          <div className="container pt-10 flex-grow">{children}</div>
         </div>
       </body>
     </html>
