@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import HeaderComponent from "@/components/layout/header";
-import NavComponent from "@/components/layout/nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={bodyClasses}>
         <HeaderComponent />
-        <div className="h-full flex flex-row">
-          <NavComponent />
-          <div className="container pt-10 flex-grow">{children}</div>
-        </div>
+        {children}
       </body>
     </html>
   );
