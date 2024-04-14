@@ -4,9 +4,9 @@ import { SidebarItem, SidebarItemComponent } from "./sidebar-item";
 
 const sidebarItems: SidebarItem[] = [
   {
-    text: "Feature flags",
+    text: "Features",
     icon: <GiToggles size="28" />,
-    link: "/feature-flags/list",
+    link: "/features/list",
   },
   { text: "Contacts", icon: <FaUsers size="28" />, link: "/users/list" },
 ];

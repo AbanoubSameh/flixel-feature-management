@@ -13,24 +13,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id           String        @id @default(uuid())
-  users        User[]
+model Application {
+  id           String             @id @default(uuid())
+  name         String
+  contacts     Contact[]
   environments Environment[]
   attributes   Attribute[]
   featureFlags FeatureFlag[]
+  users        ApplicationUsers[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+}
+
+model ApplicationUsers {
+  application   Application @relation(fields: [applicationId], references: [id])
+  applicationId String
+  user          User        @relation(fields: [userId], references: [id])
+  userId        String
+  role          UserRole
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@id([userId, applicationId])
 }
 
 model FeatureFlag {
-  id          String           @id @default(uuid())
-  name        String
-  description String?
-  schemas     Schema[]
-  Account     Account?         @relation(fields: [accountId], references: [id])
-  state       FeatureFlagState @default(ACTIVE)
-  accountId   String?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  id            String           @id @default(uuid())
+  name          String
+  description   String?
+  schemas       Schema[]
+  Application   Application      @relation(fields: [applicationId], references: [id])
+  state         FeatureFlagState @default(ACTIVE)
+  applicationId String
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 }
 
 model Schema {
@@ -38,34 +54,34 @@ model Schema {
   type            SchemaType
   value           String
   environment     Environment  @relation(fields: [environmentName], references: [name])
-  FeatureFlag     FeatureFlag? @relation(fields: [featureFlagId], references: [id])
-  featureFlagId   String?
+  FeatureFlag     FeatureFlag @relation(fields: [featureFlagId], references: [id])
+  featureFlagId   String
   environmentName String
 }
 
-model User {
-  id         String   @id @default(uuid())
-  attributes Json
-  Account    Account? @relation(fields: [accountId], references: [id])
-  accountId  String?
+model Contact {
+  id            String       @id @default(uuid())
+  attributes    Json
+  Application   Application @relation(fields: [applicationId], references: [id])
+  applicationId String
 }
 
 model Attribute {
-  key       String             @id
-  type      AttributeFieldType
-  Account   Account?           @relation(fields: [accountId], references: [id])
-  accountId String?
+  key           String             @id
+  type          AttributeFieldType
+  Application   Application?     @relation(fields: [applicationId], references: [id])
+  applicationId String?
 
-  @@unique([key, accountId])
+  @@unique([key, applicationId])
 }
 
 model Environment {
-  name      String   @id
-  Account   Account  @relation(fields: [accountId], references: [id])
-  accountId String
-  Schema    Schema[]
+  name          String      @id
+  Application   Application @relation(fields: [applicationId], references: [id])
+  applicationId String
+  Schema        Schema[]
 
-  @@unique([name, accountId])
+  @@unique([name, applicationId])
 }
 
 enum AttributeFieldType {
@@ -82,4 +98,64 @@ enum FeatureFlagState {
 enum SchemaType {
   DYNAMIC
   STATIC
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  CREATOR
+}
+
+// AuthJs tables
+model User {
+  id            String             @id @default(cuid())
+  name          String?
+  email         String             @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  applications  ApplicationUsers[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
 }

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/table";
-import { FeatureFlagDataService } from "@/lib/prisma/data/feature-flags/feature-flags-data.service";
+import { FeatureFlagDataService } from "@/lib/prisma/data/feature/feature-data.service";
 import { ColumnDef } from "@tanstack/react-table";
 import { FeatureFlag } from "@prisma/client";
 

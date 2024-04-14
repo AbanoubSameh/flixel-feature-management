@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/table";
 import { ColumnDef } from "@tanstack/react-table";
-import { User } from "@prisma/client";
-import { UserDataService } from "@/lib/prisma/data/users/users-data.service";
+import { Contact } from "@prisma/client";
+import { ContactDataService } from "@/lib/prisma/data/contact/contact-data.service";
 
-export default async function UsersListPage() {
-  const data: User[] = await UserDataService.getItems();
+export default async function ContactsListPage() {
+  const data: Contact[] = await ContactDataService.getItems();
   return (
     <div className="flex flex-col">
       <DataTable columns={featureFlagsTableColumns} data={data} />
@@ -13,7 +13,7 @@ export default async function UsersListPage() {
   );
 }
 
-const featureFlagsTableColumns: ColumnDef<User>[] = [
+const featureFlagsTableColumns: ColumnDef<Contact>[] = [
   {
     accessorKey: "name",
     header: "name",
