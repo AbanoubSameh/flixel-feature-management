@@ -14,7 +14,7 @@ export default async function AdminLayout({
   const app = await UserApplicationDataService.instance.getActiveApplication();
 
   if (!isLoggedIn || !app) {
-    redirect("/api/auth/signin");
+    redirect("/api/auth/signin?callbackUrl=/dashboard");
   }
 
   return (

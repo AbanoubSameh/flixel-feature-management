@@ -1,6 +1,6 @@
 import { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/GitHub";
+import GitHub from "@auth/core/providers/github";
 import prisma from "./lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
@@ -17,6 +17,6 @@ export const authConfig = {
       clientSecret: AUTH_GITHUB_SECRET,
     }),
   ],
-} satisfies NextAuthConfig;
+} as NextAuthConfig;
 
 export const { handlers, signIn, signOut, auth } = NextAuth(authConfig);
