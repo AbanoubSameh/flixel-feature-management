@@ -21,6 +21,7 @@ Flixel is a web application that allows customers to control feature rollouts ba
 - [ ] Customers script
 - [ ] Feature flag static and dynamic schema
 - [ ] Landing page
+- [ ] Dashboard page
 - [ ] Create documentation
 - [ ] Conduct testing
 - [ ] Release version 1.0
