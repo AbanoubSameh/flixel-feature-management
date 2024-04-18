@@ -64,7 +64,9 @@ export class UserApplicationDataService {
   }
 
   private async getUserId() {
-    const session = await auth().catch((error) => console.error(error));
+    const session = await auth().catch((error: unknown) =>
+      console.error(error),
+    );
     if (!session) {
       return null;
     }
