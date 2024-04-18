@@ -1,3 +1,5 @@
+import "server-only";
+
 import prisma from "@/lib/prisma";
 import { FeatureFlag, Prisma } from "@prisma/client";
 export class FeatureFlagDataService {
