@@ -18,7 +18,7 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex flex-row h-full">
+    <div className="flex flex-row h-full bg-slate-100">
       <NavComponent appId={app.id} />
       <div className="container pt-10 flex-grow">{children}</div>
     </div>

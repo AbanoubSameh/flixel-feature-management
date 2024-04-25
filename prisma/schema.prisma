@@ -50,17 +50,17 @@ model FeatureFlag {
 }
 
 model Schema {
-  id              String       @id @default(uuid())
+  id              String      @id @default(uuid())
   type            SchemaType
   value           String
-  environment     Environment  @relation(fields: [environmentName], references: [name])
+  environment     Environment @relation(fields: [environmentName], references: [name])
   FeatureFlag     FeatureFlag @relation(fields: [featureFlagId], references: [id])
   featureFlagId   String
   environmentName String
 }
 
 model Contact {
-  id            String       @id @default(uuid())
+  id            String      @id @default(uuid())
   attributes    Json
   Application   Application @relation(fields: [applicationId], references: [id])
   applicationId String
@@ -69,7 +69,7 @@ model Contact {
 model Attribute {
   key           String             @id
   type          AttributeFieldType
-  Application   Application?     @relation(fields: [applicationId], references: [id])
+  Application   Application?       @relation(fields: [applicationId], references: [id])
   applicationId String?
 
   @@unique([key, applicationId])

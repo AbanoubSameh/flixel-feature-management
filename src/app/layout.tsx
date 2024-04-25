@@ -17,7 +17,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const bodyClasses = `${inter.className} flex flex-col h-screen`;
+  const bodyClasses = `${inter.className} flex flex-col h-screen bg-slate-100`;
   return (
     <html lang="en">
       <body className={bodyClasses}>

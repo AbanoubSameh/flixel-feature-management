@@ -26,7 +26,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/layout/nav/component.tss"
+    "src/components/layout/nav/component.tss",
+    "src/components/layout/modal/index.tss"
   ],
   "exclude": ["node_modules"]
 }

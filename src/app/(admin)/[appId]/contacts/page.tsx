@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/table";
 import { ColumnDef } from "@tanstack/react-table";
 import { Contact } from "@prisma/client";

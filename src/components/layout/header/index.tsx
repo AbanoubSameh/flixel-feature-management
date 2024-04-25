@@ -21,7 +21,7 @@ export default async function HeaderComponent() {
           </Avatar>
         </div>
       ) : (
-        <span>Not LoggedIn</span>
+        <span></span>
       )}
     </header>
   );

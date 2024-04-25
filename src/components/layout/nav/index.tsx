@@ -13,12 +13,12 @@ export default function NavComponent({ appId }: { appId: string }) {
     {
       text: "Features",
       icon: <GiToggles size="28" />,
-      link: `/${appId}/features/list`,
+      link: `/${appId}/features`,
     },
     {
       text: "Contacts",
       icon: <FaUsers size="28" />,
-      link: `/${appId}/contacts/list`,
+      link: `/${appId}/contacts`,
     },
   ];
   return (
