@@ -1,5 +1,10 @@
 import { auth } from "@/auth";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import Link from "next/link";
 
 export default async function HeaderComponent() {
@@ -16,9 +21,16 @@ export default async function HeaderComponent() {
       {isLoggedIn ? (
         <div className="flex gap-2 justify-center items-center text-slate-600">
           <span>{session.user?.name}</span>
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={session.user?.image ?? ""} />
-          </Avatar>
+          <Popover>
+            <PopoverTrigger>
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={session.user?.image ?? ""} />
+              </Avatar>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Link href="/api/auth/signout">Logout</Link>
+            </PopoverContent>
+          </Popover>
         </div>
       ) : (
         <span></span>

@@ -2,14 +2,19 @@ import "server-only";
 
 import prisma from "@/lib/prisma";
 import { FeatureFlag, Prisma } from "@prisma/client";
+
+export type CreateFeatureIN = Pick<
+  Prisma.FeatureFlagCreateInput,
+  "name" | "description"
+> & {
+  applicationId: string;
+};
 export class FeatureFlagDataService {
   public static async createItem({
     name,
     description,
     applicationId,
-  }: Pick<Prisma.FeatureFlagCreateInput, "name" | "description"> & {
-    applicationId: string;
-  }) {
+  }: CreateFeatureIN) {
     return await prisma.featureFlag.create({
       data: {
         name,
